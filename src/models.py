@@ -138,7 +138,7 @@ class AutoencoderAnomaly:
         with torch.no_grad():
             recon = self._model(torch.from_numpy(X_scaled))
             errors = ((recon - torch.from_numpy(X_scaled)) ** 2).mean(dim=1).numpy()
-        self._max_error = float(errors.max()) or 1.0
+        self._max_error = max(float(errors.max()), 1e-6)
         return self
 
     def predict_proba(self, X: pd.DataFrame) -> np.ndarray:
