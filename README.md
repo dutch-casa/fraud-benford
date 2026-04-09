@@ -81,6 +81,11 @@ Fraud transaction amounts are 6.9 times more distant from Benford's predicted le
 
 The random seed is fixed at 42 throughout, so the numbers should reproduce bit-for-bit on the same Colab runtime version.
 
-## Author
+## Authors
 
-Dutch Casa, solo submission. See the Collaboration and Tools section of the report for the full tools list and attribution.
+- Dutch Casadaban
+- Brandon Buckley
+- Carson Phillips
+- Devon Li
+
+See the Collaboration and Tools section of the report for the full tools list and attribution.
