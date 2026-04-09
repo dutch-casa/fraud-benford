@@ -1,0 +1,93 @@
+\documentclass{article}
+
+% Replace with the real NeurIPS style file before submission:
+% \usepackage[final]{neurips_2024}
+\usepackage[margin=1in]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{amsfonts}
+\usepackage{nicefrac}
+\usepackage{microtype}
+\usepackage{graphicx}
+
+\title{Credit Card Fraud Detection with Benford's Law\\and Sequence-Inspired Features}
+
+\author{%
+  Dutch Casa\\
+  Auburn University\\
+  \texttt{email@auburn.edu}\\
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+TODO.
+\end{abstract}
+
+\section{Introduction}
+TODO. Problem statement, motivation, scope, SMART objectives.
+
+\section{Related Work}
+TODO. Stripe's Payments Foundation Model and card-testing detection. Benford's Law in forensic accounting. Classical fraud detection baselines on the ULB dataset.
+
+\section{Data}
+TODO. ULB dataset description. Class imbalance. Time-ordered evaluation rationale.
+
+\section{Methods}
+\subsection{Baselines}
+TODO.
+\subsection{Benford's Law Features}
+TODO.
+\subsection{Time-Window Aggregates}
+TODO.
+\subsection{Gradient-Boosted Trees}
+TODO.
+\subsection{Neural Models}
+TODO.
+
+\section{Experiments}
+TODO. Hyperparameter search, validation strategy, metrics.
+
+\section{Results}
+TODO. Per-model table. PR curves. Error analysis.
+
+\section{Discussion}
+TODO. Where each approach helps. Benford's contribution.
+
+\section{Limitations}
+TODO. Anonymized features, single-dataset evaluation, synthetic time ordering concerns.
+
+\section{Conclusion}
+TODO.
+
+\bibliographystyle{plain}
+\begin{thebibliography}{9}
+\bibitem{dalpozzolo2018}
+Dal Pozzolo, A., Boracchi, G., Caelen, O., Alippi, C., and Bontempi, G.
+\textit{Credit card fraud detection: a realistic modeling and a novel learning strategy.}
+IEEE Transactions on Neural Networks and Learning Systems, 2018.
+
+\bibitem{stripeflywheel2024}
+Stripe Engineering.
+\textit{The ML flywheel: How we continually improve our models to reduce card testing.}
+\url{https://stripe.com/blog/the-ml-flywheel-how-we-continually-improve-our-models-to-reduce-card-testing}, 2024.
+
+\bibitem{benford1938}
+Benford, F.
+\textit{The law of anomalous numbers.}
+Proceedings of the American Philosophical Society, 78(4):551--572, 1938.
+
+\bibitem{nigrini2012}
+Nigrini, M. J.
+\textit{Benford's Law: Applications for Forensic Accounting, Auditing, and Fraud Detection.}
+Wiley, 2012.
+
+\end{thebibliography}
+
+\end{document}
