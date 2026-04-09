@@ -7,31 +7,47 @@ import math
 import numpy as np
 import pandas as pd
 
-BENFORD_PROBS: dict[int, float] = {
-    d: math.log10(1 + 1 / d) for d in range(1, 10)
-}
+DIGITS: tuple[int, ...] = (1, 2, 3, 4, 5, 6, 7, 8, 9)
+
+BENFORD_PROBS: dict[int, float] = {d: math.log10(1 + 1 / d) for d in DIGITS}
 
 
 def leading_digit(x: float) -> int | None:
-    """Leftmost nonzero digit of |x|. Returns None if x is 0, NaN, or inf."""
-    raise NotImplementedError
+    if x is None or not math.isfinite(x) or x == 0:
+        return None
+    log = math.log10(abs(x))
+    return int(10 ** (log - math.floor(log)))
 
 
 def leading_digit_series(amounts: pd.Series) -> pd.Series:
-    """Vectorized leading_digit. NaN where input is 0/NaN/inf."""
-    raise NotImplementedError
+    vals = amounts.astype(float)
+    mask = (vals > 0) & np.isfinite(vals)
+    log_vals = np.log10(vals[mask].to_numpy())
+    digits = np.floor(10 ** (log_vals - np.floor(log_vals))).astype(int)
+    result = pd.Series(np.nan, index=amounts.index, dtype=float)
+    result.loc[mask] = digits
+    return result
 
 
 def empirical_distribution(digits: pd.Series) -> dict[int, float]:
-    """Fraction of each digit 1-9 in the series. Missing digits map to 0.0."""
-    raise NotImplementedError
+    valid = digits.dropna().astype(int)
+    if len(valid) == 0:
+        return {d: 0.0 for d in DIGITS}
+    counts = valid.value_counts()
+    total = len(valid)
+    return {d: float(counts.get(d, 0)) / total for d in DIGITS}
 
 
 def chi_square_distance(empirical: dict[int, float]) -> float:
-    """Chi-squared statistic vs. Benford's predicted distribution. Larger = further from Benford."""
-    raise NotImplementedError
+    return sum(
+        (empirical.get(d, 0.0) - BENFORD_PROBS[d]) ** 2 / BENFORD_PROBS[d]
+        for d in DIGITS
+    )
 
 
 def benford_features(df: pd.DataFrame, amount_col: str = "Amount") -> pd.DataFrame:
-    """Return a DataFrame with per-row leading digit + one-hot columns for it."""
-    raise NotImplementedError
+    digits = leading_digit_series(df[amount_col]).fillna(0).astype(int)
+    return pd.DataFrame(
+        {f"ld_{d}": (digits == d).astype(float) for d in DIGITS},
+        index=df.index,
+    )
